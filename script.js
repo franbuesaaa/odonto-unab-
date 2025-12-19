@@ -161,19 +161,12 @@ function render() {
 
       r.textContent = ramo.nombre;
 
-      // TOCAR: alternar aprobado / no aprobado
       r.onclick = () => {
-        if (aprobados.includes(ramo.nombre)) {
-          aprobados = aprobados.filter(a => a !== ramo.nombre); // desmarcar
-        } else {
-          if (ramo.prereq.length === 0 || ramo.prereq.every(pr => aprobados.includes(pr))) {
-            aprobados.push(ramo.nombre); // marcar
-          } else {
-            alert("No puedes marcar este ramo aún, faltan prerequisitos 😅");
-          }
+        if (r.classList.contains("activo")) {
+          aprobados.push(ramo.nombre);
+          localStorage.setItem("aprobados", JSON.stringify(aprobados));
+          render();
         }
-        localStorage.setItem("aprobados", JSON.stringify(aprobados));
-        render();
       };
 
       div.appendChild(r);
