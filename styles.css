@@ -1,0 +1,48 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #fff0f5;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #d63384;
+}
+
+.malla {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.semestre {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  width: 200px;
+}
+
+.semestre h2 {
+  text-align: center;
+}
+
+.ramo {
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.aprobado {
+  background: #ffc0cb;
+}
+
+.bloqueado {
+  background: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.ramo.activo {
+  background: #ff8fab;
+}
