@@ -152,30 +152,35 @@ function render() {
     ramos.filter(r => r.semestre === sem).forEach(ramo => {
       const r = document.createElement("div");
       r.className = "ramo";
+      r.style.padding = "8px 12px";
+      r.style.margin = "5px 0";
+      r.style.borderRadius = "8px";
+      r.style.cursor = "pointer";
+      r.style.transition = "all 0.2s";
+      r.style.fontWeight = "500";
 
-      // Colores y emojis según estado
+      // Aplicar estilos según estado
       if (aprobados.includes(ramo.nombre)) {
-        r.classList.add("aprobado");
-        r.style.backgroundColor = "#a0e7e5"; // azul pastel
+        r.style.backgroundColor = "#ffb3c6"; // rosa fuerte
+        r.style.textDecoration = "line-through"; // tachado
         r.textContent = "✅ " + ramo.nombre;
       } else if (ramo.prereq.length === 0 || ramo.prereq.every(pr => aprobados.includes(pr))) {
-        r.classList.add("activo");
-        r.style.backgroundColor = "#ffb3c6"; // rosa pastel
+        r.style.backgroundColor = "#ffc0cb"; // rosa clarito
+        r.style.textDecoration = "none";
         r.textContent = "✨ " + ramo.nombre;
       } else {
-        r.style.backgroundColor = "#f0f0f0"; // gris clarito
+        r.style.backgroundColor = "#f0f0f0"; // gris
+        r.style.textDecoration = "none";
         r.textContent = "🔒 " + ramo.nombre;
       }
 
       // TOCAR: alternar aprobado / no aprobado
       r.onclick = () => {
         if (aprobados.includes(ramo.nombre)) {
-          // Desmarcar siempre
-          aprobados = aprobados.filter(a => a !== ramo.nombre);
+          aprobados = aprobados.filter(a => a !== ramo.nombre); // desmarcar
         } else {
-          // Marcar si no tiene prereq o los cumple
           if (ramo.prereq.length === 0 || ramo.prereq.every(pr => aprobados.includes(pr))) {
-            aprobados.push(ramo.nombre);
+            aprobados.push(ramo.nombre); // marcar
           } else {
             alert("No puedes marcar este ramo aún, faltan prerequisitos 😅");
           }
