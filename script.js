@@ -147,32 +147,19 @@ function render() {
   semestres.forEach(sem => {
     const div = document.createElement("div");
     div.className = "semestre";
-    div.innerHTML = `<h2>📚 ${sem}</h2>`;
+    div.innerHTML = `<h2>${sem}</h2>`;
 
     ramos.filter(r => r.semestre === sem).forEach(ramo => {
       const r = document.createElement("div");
       r.className = "ramo";
-      r.style.padding = "8px 12px";
-      r.style.margin = "5px 0";
-      r.style.borderRadius = "8px";
-      r.style.cursor = "pointer";
-      r.style.transition = "all 0.2s";
-      r.style.fontWeight = "500";
 
-      // Aplicar estilos según estado
       if (aprobados.includes(ramo.nombre)) {
-        r.style.backgroundColor = "#ffb3c6"; // rosa fuerte
-        r.style.textDecoration = "line-through"; // tachado
-        r.textContent = "✅ " + ramo.nombre;
-      } else if (ramo.prereq.length === 0 || ramo.prereq.every(pr => aprobados.includes(pr))) {
-        r.style.backgroundColor = "#ffc0cb"; // rosa clarito
-        r.style.textDecoration = "none";
-        r.textContent = "✨ " + ramo.nombre;
-      } else {
-        r.style.backgroundColor = "#f0f0f0"; // gris
-        r.style.textDecoration = "none";
-        r.textContent = "🔒 " + ramo.nombre;
+        r.classList.add("aprobado");
+      } else if (puedeActivarse(ramo)) {
+        r.classList.add("activo");
       }
+
+      r.textContent = ramo.nombre;
 
       // TOCAR: alternar aprobado / no aprobado
       r.onclick = () => {
@@ -195,3 +182,5 @@ function render() {
     contenedor.appendChild(div);
   });
 }
+
+render();
