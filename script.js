@@ -161,12 +161,21 @@ function render() {
 
       r.textContent = ramo.nombre;
 
+      // TOCAR: aprobar
       r.onclick = () => {
-        if (r.classList.contains("activo")) {
+        if (r.classList.contains("activo") && !aprobados.includes(ramo.nombre)) {
           aprobados.push(ramo.nombre);
           localStorage.setItem("aprobados", JSON.stringify(aprobados));
           render();
         }
+      };
+
+      // TOCAR: desmarcar SOLO este ramo
+      r.oncontextmenu = (e) => {
+        e.preventDefault();
+        aprobados = aprobados.filter(a => a !== ramo.nombre);
+        localStorage.setItem("aprobados", JSON.stringify(aprobados));
+        render();
       };
 
       div.appendChild(r);
