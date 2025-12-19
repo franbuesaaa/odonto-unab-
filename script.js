@@ -156,11 +156,11 @@ function render() {
       // Colores y emojis según estado
       if (aprobados.includes(ramo.nombre)) {
         r.classList.add("aprobado");
-        r.style.backgroundColor = "#a0e7e5"; // pastel azul
+        r.style.backgroundColor = "#a0e7e5"; // azul pastel
         r.textContent = "✅ " + ramo.nombre;
-      } else if (puedeActivarse(ramo)) {
+      } else if (ramo.prereq.length === 0 || ramo.prereq.every(pr => aprobados.includes(pr))) {
         r.classList.add("activo");
-        r.style.backgroundColor = "#ffb3c6"; // pastel rosa
+        r.style.backgroundColor = "#ffb3c6"; // rosa pastel
         r.textContent = "✨ " + ramo.nombre;
       } else {
         r.style.backgroundColor = "#f0f0f0"; // gris clarito
@@ -170,9 +170,15 @@ function render() {
       // TOCAR: alternar aprobado / no aprobado
       r.onclick = () => {
         if (aprobados.includes(ramo.nombre)) {
-          aprobados = aprobados.filter(a => a !== ramo.nombre); // desmarcar
-        } else if (puedeActivarse(ramo)) {
-          aprobados.push(ramo.nombre); // aprobar
+          // Desmarcar siempre
+          aprobados = aprobados.filter(a => a !== ramo.nombre);
+        } else {
+          // Marcar si no tiene prereq o los cumple
+          if (ramo.prereq.length === 0 || ramo.prereq.every(pr => aprobados.includes(pr))) {
+            aprobados.push(ramo.nombre);
+          } else {
+            alert("No puedes marcar este ramo aún, faltan prerequisitos 😅");
+          }
         }
         localStorage.setItem("aprobados", JSON.stringify(aprobados));
         render();
