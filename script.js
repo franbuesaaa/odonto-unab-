@@ -147,33 +147,33 @@ function render() {
   semestres.forEach(sem => {
     const div = document.createElement("div");
     div.className = "semestre";
-    div.innerHTML = `<h2>${sem}</h2>`;
+    div.innerHTML = `<h2>📚 ${sem}</h2>`;
 
     ramos.filter(r => r.semestre === sem).forEach(ramo => {
       const r = document.createElement("div");
       r.className = "ramo";
 
+      // Colores y emojis según estado
       if (aprobados.includes(ramo.nombre)) {
         r.classList.add("aprobado");
+        r.style.backgroundColor = "#a0e7e5"; // pastel azul
+        r.textContent = "✅ " + ramo.nombre;
       } else if (puedeActivarse(ramo)) {
         r.classList.add("activo");
+        r.style.backgroundColor = "#ffb3c6"; // pastel rosa
+        r.textContent = "✨ " + ramo.nombre;
+      } else {
+        r.style.backgroundColor = "#f0f0f0"; // gris clarito
+        r.textContent = "🔒 " + ramo.nombre;
       }
 
-      r.textContent = ramo.nombre;
-
-      // TOCAR: aprobar
+      // TOCAR: alternar aprobado / no aprobado
       r.onclick = () => {
-        if (r.classList.contains("activo") && !aprobados.includes(ramo.nombre)) {
-          aprobados.push(ramo.nombre);
-          localStorage.setItem("aprobados", JSON.stringify(aprobados));
-          render();
+        if (aprobados.includes(ramo.nombre)) {
+          aprobados = aprobados.filter(a => a !== ramo.nombre); // desmarcar
+        } else if (puedeActivarse(ramo)) {
+          aprobados.push(ramo.nombre); // aprobar
         }
-      };
-
-      // TOCAR: desmarcar SOLO este ramo
-      r.onclick = (e) => {
-        e.preventDefault();
-        aprobados = aprobados.filter(a => a !== ramo.nombre);
         localStorage.setItem("aprobados", JSON.stringify(aprobados));
         render();
       };
@@ -184,5 +184,3 @@ function render() {
     contenedor.appendChild(div);
   });
 }
-
-render();
