@@ -171,7 +171,7 @@ function render() {
       };
 
       // TOCAR: desmarcar SOLO este ramo
-      r.oncontextmenu = (e) => {
+      r.onclick = (e) => {
         e.preventDefault();
         aprobados = aprobados.filter(a => a !== ramo.nombre);
         localStorage.setItem("aprobados", JSON.stringify(aprobados));
