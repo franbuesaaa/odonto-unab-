@@ -1,48 +1,100 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #fff0f5;
-  padding: 20px;
+  font-family: "Poppins", "Segoe UI", system-ui;
+  background: linear-gradient(180deg, #fff0f6, #f2f5ff);
+  margin: 0;
+  padding: 22px;
+  color: #3a2a44;
 }
 
 h1 {
   text-align: center;
   color: #d63384;
+  font-size: 2.6rem;
+  letter-spacing: 1px;
 }
 
-.malla {
+#malla {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 24px;
   justify-content: center;
 }
 
+/* 🌸 SEMESTRES */
 .semestre {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  width: 200px;
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 16px;
+  width: 270px;
+  box-shadow: 0 12px 30px rgba(214, 51, 132, 0.18);
+  border-top: 7px solid #f4a9c7;
+  position: relative;
+}
+
+.semestre::before {
+  content: "🎀";
+  position: absolute;
+  top: -14px;
+  right: 14px;
+  font-size: 1.4rem;
 }
 
 .semestre h2 {
   text-align: center;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+  color: #d63384;
+  font-weight: 600;
 }
 
+/* 🦷 RAMOS */
 .ramo {
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  text-align: center;
+  background: #faf3f7;
+  border-radius: 18px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+  cursor: not-allowed;
+  transition: all 0.25s ease;
+  border-left: 6px solid #e6c3d3;
+}
+
+/* Disponible */
+.ramo.activo {
+  background: #fde8f2;
+  border-left: 6px solid #ff6fae;
   cursor: pointer;
 }
 
-.aprobado {
-  background: #ffc0cb;
+.ramo.activo::before {
+  content: "🦷✨ ";
 }
 
-.bloqueado {
-  background: #e0e0e0;
-  cursor: not-allowed;
+/* Aprobado */
+.ramo.aprobado {
+  background: #ffdbe9;
+  border-left: 6px solid #ff4d6d;
+  text-decoration: line-through;
+  cursor: pointer;
 }
 
-.ramo.activo {
-  background: #ff8fab;
+.ramo.aprobado::before {
+  content: "💖✔️ ";
+}
+
+/* Hover */
+.ramo.activo:hover {
+  transform: scale(1.04);
+  background: #fbd0e2;
+}
+
+.ramo.aprobado:hover {
+  background: #ffc1d6;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .semestre {
+    width: 100%;
+  }
 }
